@@ -12,6 +12,7 @@ params = {
     "length": 1,  # rod length (m)
     "mass": 0.2,  # point mass at end of rod (kg)
     "damping_coeff": 0.0,  # damping coefficient (kg*m^2/s)
+    "torque": 0.0,  # torque (Nm)
 }
 
 
@@ -28,7 +29,7 @@ state_traj[:, 0] = initial_state
 
 # simulation loop
 for step, t in enumerate(time_traj[:-1]):
-    state_traj[:, step + 1] = integrator(t, state_traj[:, step], timestep, model.dynamics, params)
+    state_traj[:, step + 1] = integrator(model.dynamics, t, state_traj[:, step], timestep, params)
 
 # sanity check the energies: since there is no actuation, and no damping, total energy should stay
 # constant. If we turn on the damping coefficient, it should slowly bleed out energy until it comes to
